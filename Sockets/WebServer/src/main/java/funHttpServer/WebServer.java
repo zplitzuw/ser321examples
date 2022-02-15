@@ -25,6 +25,7 @@ import java.util.Random;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.nio.charset.Charset;
+import java.lang.Math;
 
 class WebServer {
   public static void main(String args[]) {
@@ -216,6 +217,12 @@ class WebServer {
 
           // TODO: Include error handling here with a correct error code and
           // a response that makes sense
+          if(result = null || result != int) {
+        	  	builder.append("HTTP/1.1 400 Bad Request\n");
+          		builder.append("Content-Type: text/html; charset=utf-8\n");
+          		builder.append("\n");
+          		builder.append("I am not sure what you want me to do...");
+          }
 
         } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
@@ -238,8 +245,67 @@ class WebServer {
           // amehlhase, 46384989 -> memoranda
           // amehlhase, 46384989 -> ser316examples
           // amehlhase, 46384989 -> test316
+          
+          // extract required fields from parameters
+          String owner_name = String.parseString(query_pairs.get("owner_name"));
+          Integer owner_id = Integer.parseInt(query_pairs.get("owner_id"));
+          String repo_name = String.parseString(query_pairs.get("repo_name"));
+          
+          String full_result =  (owner_name + ", " + owner_id + " -> " + repo_name)
+          
+          JSON.parse('json')
 
-        } else {
+
+        } else if (request.contains("triangle_area?")) {
+        	  // Finds the area of a triangle
+        	  Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+              // extract path parameters
+              query_pairs = splitQuery(request.replace("triangle area?", ""));
+              
+              // extract required fields from parameters
+              Integer base = Integer.parseInt(query_pairs.get("base"));
+              Integer height = Integer.parseInt(query_pairs.get("height"));
+              
+              // do the math
+              Integer area = base * height * 1/2;
+              
+              // Generate response
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("The area is: " + area);
+              
+              if(result = null) {
+          	  		builder.append("HTTP/1.1 400 Bad Request\n");
+            		builder.append("Content-Type: text/html; charset=utf-8\n");
+            		builder.append("\n");
+            		builder.append("I am not sure what you want me to do...");
+            }
+          } else if (request.contains("random_number_generator?")) {
+        	  // Random integer between two integers
+        	  Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+              // extract path parameters
+              query_pairs = splitQuery(request.replace("random number generator?", ""));
+              
+              // extract required fields from parameters
+              Integer low_num = Integer.parseInt(query_pairs.get("low_num"));
+              Integer high_num= Integer.parseInt(query_pairs.get("high_num"));
+              
+              // find random int
+              Integer randomInt = low_num + (int)(Math.random() * ((high_num - low_num) + 1))
+              
+              // Generate response
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("The area is: " + area);
+              
+              if(result = null) {
+          	  		builder.append("HTTP/1.1 400 Bad Request\n");
+            		builder.append("Content-Type: text/html; charset=utf-8\n");
+            		builder.append("\n");
+            		builder.append("I am not sure what you want me to do...");
+            } else {
           // if the request is not recognized at all
 
           builder.append("HTTP/1.1 400 Bad Request\n");

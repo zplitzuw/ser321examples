@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 /**
  * Purpose: demonstrate simple Java Fraction class with command line,
  * jdb debugging, and Ant build file.
@@ -43,9 +44,16 @@ public class Fraction {
          // Fraction *frac = [[Fraction alloc] init];
          Fraction frac = new Fraction();
 
-         // set the values
-         frac.setNumerator(1);
-         frac.setDenominator(3);
+         // get a new scanner
+         Scanner scanner = new Scanner(System.in)
+        		 
+         // get the numerator
+         System.out.println("Please enter a numerator: ");
+         int num = scanner.nextInt();
+         
+         // get the denominator
+         System.out.println(" Please enter a denominator: ");
+         int denom = scanner.nextInt();
 
          // print it
          System.out.print("The fraction is: ");
